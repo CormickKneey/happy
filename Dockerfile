@@ -1,4 +1,4 @@
-# Standalone happy-server: single container, no external dependencies
+# Standalone hoppers-server: single container, no external dependencies
 # Uses PGlite (embedded Postgres), local filesystem storage, no Redis
 
 # Stage 1: install dependencies
@@ -10,31 +10,32 @@ WORKDIR /repo
 
 COPY package.json yarn.lock ./
 COPY scripts ./scripts
+COPY patches ./patches
 
-RUN mkdir -p packages/happy-app packages/happy-server packages/happy-cli packages/happy-agent packages/happy-wire
+RUN mkdir -p packages/hoppers-app packages/hoppers-server packages/hoppers-cli packages/hoppers-agent packages/hoppers-wire
 
-COPY packages/happy-app/package.json packages/happy-app/
-COPY packages/happy-server/package.json packages/happy-server/
-COPY packages/happy-cli/package.json packages/happy-cli/
-COPY packages/happy-agent/package.json packages/happy-agent/
-COPY packages/happy-wire/package.json packages/happy-wire/
+COPY packages/hoppers-app/package.json packages/hoppers-app/
+COPY packages/hoppers-server/package.json packages/hoppers-server/
+COPY packages/hoppers-cli/package.json packages/hoppers-cli/
+COPY packages/hoppers-agent/package.json packages/hoppers-agent/
+COPY packages/hoppers-wire/package.json packages/hoppers-wire/
 
 # Workspace postinstall requirements
-COPY packages/happy-app/patches packages/happy-app/patches
-COPY packages/happy-server/prisma packages/happy-server/prisma
-COPY packages/happy-cli/scripts packages/happy-cli/scripts
-COPY packages/happy-cli/tools packages/happy-cli/tools
+COPY packages/hoppers-app/patches packages/hoppers-app/patches
+COPY packages/hoppers-server/prisma packages/hoppers-server/prisma
+COPY packages/hoppers-cli/scripts packages/hoppers-cli/scripts
+COPY packages/hoppers-cli/tools packages/hoppers-cli/tools
 
-RUN SKIP_HAPPY_WIRE_BUILD=1 yarn install --frozen-lockfile --ignore-engines
+RUN SKIP_HOPPERS_WIRE_BUILD=1 yarn install --frozen-lockfile --ignore-engines
 
 # Stage 2: copy source and type-check
 FROM deps AS builder
 
-COPY packages/happy-wire ./packages/happy-wire
-COPY packages/happy-server ./packages/happy-server
+COPY packages/hoppers-wire ./packages/hoppers-wire
+COPY packages/hoppers-server ./packages/hoppers-server
 
-RUN yarn workspace @slopus/happy-wire build
-RUN yarn workspace happy-server build
+RUN yarn workspace @hoppers-app/hoppers-wire build
+RUN yarn workspace hoppers-server build
 
 # Stage 3: runtime
 FROM node:20-slim AS runner
@@ -48,10 +49,10 @@ ENV DATA_DIR=/data
 ENV PGLITE_DIR=/data/pglite
 
 COPY --from=builder /repo/node_modules /repo/node_modules
-COPY --from=builder /repo/packages/happy-wire /repo/packages/happy-wire
-COPY --from=builder /repo/packages/happy-server /repo/packages/happy-server
+COPY --from=builder /repo/packages/hoppers-wire /repo/packages/hoppers-wire
+COPY --from=builder /repo/packages/hoppers-server /repo/packages/hoppers-server
 
 VOLUME /data
 EXPOSE 3005
 
-CMD ["sh", "-c", "node_modules/.bin/tsx packages/happy-server/sources/standalone.ts migrate && exec node_modules/.bin/tsx packages/happy-server/sources/standalone.ts serve"]
+CMD ["sh", "-c", "node_modules/.bin/tsx packages/hoppers-server/sources/standalone.ts migrate && exec node_modules/.bin/tsx packages/hoppers-server/sources/standalone.ts serve"]

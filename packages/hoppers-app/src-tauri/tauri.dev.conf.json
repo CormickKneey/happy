@@ -1,0 +1,12 @@
+{
+  "$schema": "../../node_modules/@tauri-apps/cli/config.schema.json",
+  "productName": "Hoppers (dev)",
+  "identifier": "cc.hoppers.app.dev",
+  "app": {
+    "windows": [
+      {
+        "title": "Hoppers (dev)"
+      }
+    ]
+  }
+}

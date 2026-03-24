@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "1085136829934",
+    "project_id": "hoppers-24c0e",
+    "storage_bucket": "hoppers-24c0e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1085136829934:android:1d1a5e399ef3f6d91762ff",
+        "android_client_info": {
+          "package_name": "cc.hoppers.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoG2zEukp9aQAKpGsw6c48lzGmv4RQfGQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1085136829934:android:597bb3307682df141762ff",
+        "android_client_info": {
+          "package_name": "cc.hoppers.app.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoG2zEukp9aQAKpGsw6c48lzGmv4RQfGQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1085136829934:android:34b8a91589382e6a1762ff",
+        "android_client_info": {
+          "package_name": "cc.hoppers.app.preview"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoG2zEukp9aQAKpGsw6c48lzGmv4RQfGQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -5,21 +5,22 @@ WORKDIR /repo
 
 COPY package.json yarn.lock ./
 COPY scripts ./scripts
+COPY patches ./patches
 
-RUN mkdir -p packages/happy-app packages/happy-server packages/happy-cli packages/happy-wire
+RUN mkdir -p packages/hoppers-app packages/hoppers-server packages/hoppers-cli packages/hoppers-wire
 
-COPY packages/happy-app/package.json packages/happy-app/
-COPY packages/happy-server/package.json packages/happy-server/
-COPY packages/happy-cli/package.json packages/happy-cli/
-COPY packages/happy-wire/package.json packages/happy-wire/
+COPY packages/hoppers-app/package.json packages/hoppers-app/
+COPY packages/hoppers-server/package.json packages/hoppers-server/
+COPY packages/hoppers-cli/package.json packages/hoppers-cli/
+COPY packages/hoppers-wire/package.json packages/hoppers-wire/
 
 # Workspace postinstall requirements
-COPY packages/happy-app/patches packages/happy-app/patches
-COPY packages/happy-server/prisma packages/happy-server/prisma
-COPY packages/happy-cli/scripts packages/happy-cli/scripts
-COPY packages/happy-cli/tools packages/happy-cli/tools
+COPY packages/hoppers-app/patches packages/hoppers-app/patches
+COPY packages/hoppers-server/prisma packages/hoppers-server/prisma
+COPY packages/hoppers-cli/scripts packages/hoppers-cli/scripts
+COPY packages/hoppers-cli/tools packages/hoppers-cli/tools
 
-RUN SKIP_HAPPY_WIRE_BUILD=1 yarn install --frozen-lockfile --ignore-engines
+RUN SKIP_HOPPERS_WIRE_BUILD=1 yarn install --frozen-lockfile --ignore-engines
 
 # Stage 2: build the web app
 FROM deps AS builder
@@ -32,16 +33,16 @@ ENV APP_ENV=production
 ENV EXPO_PUBLIC_POSTHOG_API_KEY=$POSTHOG_API_KEY
 ENV EXPO_PUBLIC_REVENUE_CAT_STRIPE=$REVENUE_CAT_STRIPE
 
-COPY packages/happy-wire ./packages/happy-wire
-COPY packages/happy-app ./packages/happy-app
+COPY packages/hoppers-wire ./packages/hoppers-wire
+COPY packages/hoppers-app ./packages/hoppers-app
 
-RUN yarn workspace @slopus/happy-wire build
-RUN yarn workspace happy-app expo export --platform web --output-dir dist
+RUN yarn workspace @hoppers-app/hoppers-wire build
+RUN yarn workspace hoppers-app expo export --platform web --output-dir dist
 
 # Stage 3: runtime with Nginx
 FROM nginx:alpine AS runner
 
-COPY --from=builder /repo/packages/happy-app/dist /usr/share/nginx/html
+COPY --from=builder /repo/packages/hoppers-app/dist /usr/share/nginx/html
 
 # Remove default nginx configuration
 RUN rm /etc/nginx/conf.d/default.conf

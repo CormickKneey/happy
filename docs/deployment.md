@@ -1,6 +1,6 @@
 # Deployment
 
-This document describes how to deploy the Happy backend (`packages/happy-server`) and the infrastructure it expects.
+This document describes how to deploy the Hoppers backend (`packages/hoppers-server`) and the infrastructure it expects.
 
 ## Runtime overview
 - **App server:** Node.js running `tsx ./sources/main.ts` (Fastify + Socket.IO).
@@ -51,9 +51,9 @@ Key notes:
 - The image includes FFmpeg and Python for media processing.
 
 ## Kubernetes manifests
-Example manifests live in `packages/happy-server/deploy`:
+Example manifests live in `packages/hoppers-server/deploy`:
 - `handy.yaml`: Deployment + Service + ExternalSecrets for the server.
-- `happy-redis.yaml`: Redis StatefulSet + Service + ConfigMap.
+- `hoppers-redis.yaml`: Redis StatefulSet + Service + ConfigMap.
 
 The deployment config expects:
 - Prometheus scraping annotations on port `9090`.
@@ -62,14 +62,14 @@ The deployment config expects:
 
 ## Local dev helpers
 The server package includes scripts for local infrastructure:
-- `yarn workspace happy-server db` (Postgres in Docker)
-- `yarn workspace happy-server redis`
-- `yarn workspace happy-server s3` + `s3:init`
+- `yarn workspace hoppers-server db` (Postgres in Docker)
+- `yarn workspace hoppers-server redis`
+- `yarn workspace hoppers-server s3` + `s3:init`
 
-Use `.env`/`.env.dev` to load local settings when running `yarn workspace happy-server dev`.
+Use `.env`/`.env.dev` to load local settings when running `yarn workspace hoppers-server dev`.
 
 ## Implementation references
-- Entrypoint: `packages/happy-server/sources/main.ts`
+- Entrypoint: `packages/hoppers-server/sources/main.ts`
 - Dockerfile: `Dockerfile.server`
-- Kubernetes manifests: `packages/happy-server/deploy`
-- Env usage: `packages/happy-server/sources` (`rg -n "process.env"`)
+- Kubernetes manifests: `packages/hoppers-server/deploy`
+- Env usage: `packages/hoppers-server/sources` (`rg -n "process.env"`)
