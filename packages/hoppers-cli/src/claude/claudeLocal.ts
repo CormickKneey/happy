@@ -389,6 +389,11 @@ export async function claudeLocal(opts: {
             })().catch(reject);
         });
     } finally {
+        // Restore terminal state after Claude Code exits
+        // Claude's TUI may leave the terminal in raw mode
+        if (process.stdin.isTTY && process.stdin.isRaw) {
+            process.stdin.setRawMode(false);
+        }
         process.stdin.resume();
         if (stopThinkingTimeout) {
             clearTimeout(stopThinkingTimeout);

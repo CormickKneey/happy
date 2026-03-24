@@ -101,6 +101,22 @@ export const ApiNewFeedPostSchema = z.object({
     repeatKey: z.string().nullable()
 });
 
+// New machine schema (when a new machine is registered)
+export const ApiNewMachineSchema = z.object({
+    t: z.literal('new-machine'),
+    machineId: z.string(),
+    seq: z.number(),
+    metadata: z.string(),
+    metadataVersion: z.number(),
+    daemonState: z.string().nullable().optional(),
+    daemonStateVersion: z.number().optional(),
+    dataEncryptionKey: z.string().nullable().optional(),
+    active: z.boolean(),
+    activeAt: z.number(),
+    createdAt: z.number(),
+    updatedAt: z.number(),
+});
+
 // KV batch update schema for real-time KV updates
 export const ApiKvBatchUpdateSchema = z.object({
     t: z.literal('kv-batch-update'),
@@ -120,6 +136,7 @@ export const ApiUpdateSchema = z.union([
     ApiUpdateSessionStateSchema,
     ApiUpdateAccountSchema,
     ApiUpdateMachineStateSchema,
+    ApiNewMachineSchema,
     ApiNewArtifactSchema,
     ApiUpdateArtifactSchema,
     ApiDeleteArtifactSchema,
