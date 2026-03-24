@@ -6,9 +6,9 @@ The Happy app supports three build variants across **iOS, Android, and macOS des
 
 | Variant | Bundle ID | App Name | Use Case |
 |---------|-----------|----------|----------|
-| **Development** | `com.slopus.happy.dev` | Happy (dev) | Local development with hot reload |
-| **Preview** | `com.slopus.happy.preview` | Happy (preview) | Beta testing & OTA updates before production |
-| **Production** | `com.cormick.hoppers` | Happy | Public App Store release |
+| **Development** | `cc.hoppers.app.dev` | Happy (dev) | Local development with hot reload |
+| **Preview** | `cc.hoppers.app.preview` | Happy (preview) | Beta testing & OTA updates before production |
+| **Production** | `cc.hoppers.app.hoppers` | Happy | Public App Store release |
 
 **Why Preview?**
 - **Development**: Fast iteration, dev server, instant reload
@@ -289,9 +289,9 @@ The `app.config.js` file reads the `APP_ENV` environment variable:
 ```javascript
 const variant = process.env.APP_ENV || 'development';
 const bundleId = {
-  development: "com.slopus.happy.dev",
-  preview: "com.slopus.happy.preview",
-  production: "com.cormick.hoppers"
+  development: "cc.hoppers.app.dev",
+  preview: "cc.hoppers.app.preview",
+  production: "cc.hoppers.app"
 }[variant];
 ```
 

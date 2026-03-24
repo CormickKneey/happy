@@ -69,5 +69,5 @@ Hoppers is an open-source mobile app that lets developers control AI coding agen
 - GitHub: https://github.com/CormickKneey/hoppers
 - Website: https://hoppers.cc
 - iOS App: https://apps.apple.com/us/app/happy-claude-code-client/id6748571505
-- Android App: https://play.google.com/store/apps/details?id=com.cormick.hoppers
+- Android App: https://play.google.com/store/apps/details?id=cc.hoppers.app
 - Web App: https://app.hoppers.cc/

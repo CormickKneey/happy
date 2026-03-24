@@ -1,4 +1,11 @@
 # ──────────────────────────────────────────────
+# hoppers.cc → Redirect to app.hoppers.cc
+# ──────────────────────────────────────────────
+{$DOMAIN:hoppers.cc} {
+	reverse_proxy webapp:80
+}
+
+# ──────────────────────────────────────────────
 # api.hoppers.cc → API Server
 # ──────────────────────────────────────────────
 api.{$DOMAIN:hoppers.cc} {
